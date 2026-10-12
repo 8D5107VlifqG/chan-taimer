@@ -40,6 +40,8 @@ class RingService : Service() {
         val gap = (p.getFloat("repeat_gap_min", 1f).coerceIn(0.1f, 60f) * 60).toInt()
         val vol = p.getInt("volume", 70).coerceIn(10, 100) / 100f
         val vibrate = p.getBoolean("vibrate", true)
+        val strike = p.getFloat("strike_gap", 3f).coerceIn(0.5f, 30f).toDouble()
+        val media = p.getBoolean("media_volume", true)
 
         instance = this
         ensureChannel(this)
@@ -61,7 +63,7 @@ class RingService : Service() {
                 for (i in 1..count) {
                     nm.notify(RING_ID, buildNotification(i, count))
                     if (vibrate) vibrateNow()
-                    if (soundOn) Synth.play(idx, sec, vol) else Thread.sleep(sec * 1000L)
+                    if (soundOn) Synth.play(idx, sec, vol, strike, media) else Thread.sleep(sec * 1000L)
                     if (i < count) Thread.sleep(gap * 1000L)
                 }
             } catch (_: InterruptedException) {

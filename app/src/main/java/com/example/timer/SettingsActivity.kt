@@ -25,11 +25,13 @@ class SettingsActivity : Activity() {
         prefs = getSharedPreferences("timer", Context.MODE_PRIVATE)
 
         bindSwitch(R.id.swSound, "sound", true)
+        bindSwitch(R.id.swMedia, "media_volume", true)
         bindSwitch(R.id.swVibrate, "vibrate", true)
         bindSwitch(R.id.swKeepOn, "keep_on", false)
         bindInt(R.id.etSec, "sound_sec", 10)
         bindInt(R.id.etCount, "repeat_count", 1)
         bindFloat(R.id.etGap, "repeat_gap_min", 1f)
+        bindFloat(R.id.etStrike, "strike_gap", 3f)
 
         val rg = findViewById<RadioGroup>(R.id.rgSound)
         Synth.NAMES.forEachIndexed { i, name ->
@@ -62,8 +64,10 @@ class SettingsActivity : Activity() {
             val idx = prefs.getInt("sound_idx", 0)
             val sec = minOf(prefs.getInt("sound_sec", 10).coerceIn(1, 60), 8)
             val vol = prefs.getInt("volume", 70).coerceIn(10, 100) / 100f
+            val strike = prefs.getFloat("strike_gap", 3f).coerceIn(0.5f, 30f).toDouble()
+            val media = prefs.getBoolean("media_volume", true)
             preview = Thread {
-                try { Synth.play(idx, sec, vol) } catch (_: InterruptedException) {}
+                try { Synth.play(idx, sec, vol, strike, media) } catch (_: InterruptedException) {}
             }.also { it.start() }
         }
         findViewById<Button>(R.id.btnBack).setOnClickListener { finish() }

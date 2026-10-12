@@ -54,6 +54,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
+        <Switch
+            android:id="@+id/swMedia"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="56dp"
+            android:text="Громкость мультимедиа (обычные кнопки громкости)" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -67,6 +74,20 @@
             android:layout_height="wrap_content"
             android:inputType="number"
             android:maxLength="2" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Интервал между ударами «динь», сек (0,5–30)"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/etStrike"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:maxLength="4" />
 
         <TextView
             android:layout_width="wrap_content"
